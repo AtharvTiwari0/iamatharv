@@ -173,21 +173,7 @@
     margin-top: 6px;
     line-height: 1.5;
   }
-  .hero-nav {
-    position: absolute;
-    right: -40px; top: 50%;
-    transform: translateY(-50%);
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .hero-nav a {
-    text-decoration: none;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    transition: color 0.2s;
-  }
-  .hero-nav a:hover { color: var(--maroon); }
+
 
   .badge {
     position: absolute;
@@ -491,7 +477,6 @@
     .hero-headline { font-size: clamp(52px, 14vw, 80px); }
     .hero-card { max-width: 100%; }
     .hero-photo { aspect-ratio: 4/5; }
-    .hero-nav { display: none; }
     .badge { right: 10px; bottom: 140px; font-size: 0.65rem; }
 
     .about-left { padding: 36px 20px; }
@@ -557,11 +542,7 @@
         </div>
         <div class="badge">🚀 Your Vision, My Code</div>
       </div>
-      <div class="hero-nav">
-        <a href="#" onclick="showPage('intro',null)">Home</a>
-        <a href="#" onclick="showPage('about',null)">About</a>
-        <a href="#" onclick="showPage('contact',null)">Contact</a>
-      </div>
+
     </div>
   </div>
 
@@ -724,15 +705,26 @@
     btn.textContent = 'Bhej raha hoon...';
     btn.disabled = true;
 
+    const name = form.querySelector('[name="name"]').value;
+    const company = form.querySelector('[name="company"]').value;
+    const email = form.querySelector('[name="email"]').value;
+    const message = form.querySelector('[name="message"]').value;
+
     try {
-      const data = new FormData(form);
-      await fetch('https://submit-form.com/Pn8aUQHVe', {
+      const res = await fetch('https://submit-form.com/Pn8aUQHVe', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: data
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ name, company, email, message })
       });
-      form.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        throw new Error('Server error');
+      }
     } catch(err) {
       btn.textContent = 'Send Message →';
       btn.disabled = false;
