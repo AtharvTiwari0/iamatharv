@@ -1,680 +1,778 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atharv Tiwari</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-:root{
---bg:#090311;
---bg2:#12061f;
---surface:rgba(255,255,255,.06);
---border:rgba(255,255,255,.09);
---text:#f5f5f5;
---muted:#9a92b3;
---purple:#9b5cff;
---purple2:#6d28d9;
---green:#4ade80;
---font:'Inter',sans-serif;
---mono:'Fira Code',monospace;
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-font-family:var(--font);
-background:
-linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),
-radial-gradient(circle at top,var(--purple2),#090311 45%);
-background-size:40px 40px,40px 40px,100% 100%;
-color:var(--text);
-overflow-x:hidden;
-transition:background .4s,color .4s;
-}
-
-body.light{
---bg:#ffffff;
---bg2:#f5f5f5;
---surface:rgba(255,255,255,.9);
---border:rgba(0,0,0,.08);
---text:#111111;
---muted:#555555;
-background:
-linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),
-linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px),
-radial-gradient(circle at top,#d8b4fe,#ffffff 45%);
-background-size:40px 40px,40px 40px,100% 100%;
-}
-
-a{
-text-decoration:none;
-color:inherit;
-}
-
-img{
-max-width:100%;
-display:block;
-}
-
-/* NAV */
-
-nav{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:72px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 6%;
-backdrop-filter:blur(14px);
-background:rgba(9,3,17,.7);
-border-bottom:1px solid var(--border);
-z-index:999;
-}
-
-.logo{
-font-size:1.2rem;
-font-weight:800;
-letter-spacing:-.05em;
-}
-
-.nav-links{
-display:flex;
-gap:2rem;
-}
-
-.nav-links a{
-font-size:.92rem;
-color:var(--muted);
-transition:.25s;
-}
-
-.nav-links a:hover{
-color:white;
-}
-
-.music-btn{
-padding:.75rem 1rem;
-border-radius:12px;
-background:var(--surface);
-border:1px solid var(--border);
-font-size:.8rem;
-color:var(--muted);
-}
-
-/* HERO */
-
-#home{
-min-height:100vh;
-padding:120px 6% 80px;
-display:grid;
-grid-template-columns:520px 1fr;
-align-items:center;
-gap:6rem;
-}
-
-.hero-left{
-position:relative;
-display:flex;
-justify-content:center;
-}
-
-.glow{
-position:absolute;
-width:350px;
-height:350px;
-border-radius:50%;
-background:rgba(155,92,255,.35);
-filter:blur(100px);
-}
-
-.card-back{
-position:absolute;
-width:320px;
-height:420px;
-border-radius:32px;
-background:rgba(155,92,255,.15);
-transform:rotate(-8deg);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.hero-card{
-position:relative;
-width:320px;
-height:420px;
-border-radius:32px;
-overflow:hidden;
-border:1px solid rgba(255,255,255,.1);
-background:#12061f;
-box-shadow:0 0 40px rgba(155,92,255,.25);
-}
-
-.hero-card img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.programmer-tag{
-position:absolute;
-top:16px;
-left:16px;
-padding:.7rem 1rem;
-border-radius:999px;
-background:rgba(0,0,0,.45);
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,.08);
-font-family:var(--mono);
-font-size:.78rem;
-}
-
-.available{
-position:absolute;
-bottom:16px;
-left:50%;
-transform:translateX(-50%);
-padding:.8rem 1.3rem;
-border-radius:999px;
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(12px);
-display:flex;
-align-items:center;
-gap:.6rem;
-border:1px solid rgba(255,255,255,.08);
-font-size:.82rem;
-}
-
-.dot{
-width:8px;
-height:8px;
-border-radius:50%;
-background:var(--green);
-}
-
-.hero-right small{
-font-size:1.2rem;
-color:var(--muted);
-font-weight:700;
-}
-
-.hero-right h1{
-font-size:clamp(3rem,8vw,6rem);
-line-height:.95;
-letter-spacing:-.07em;
-margin:.8rem 0 1rem;
-}
-
-.hero-right h1 span{
-color:var(--purple);
-}
-
-.typing{
-font-size:2rem;
-font-weight:700;
-color:var(--purple);
-margin-bottom:1.5rem;
-font-family:var(--mono);
-}
-
-.desc{
-max-width:620px;
-line-height:1.8;
-color:var(--muted);
-font-size:1rem;
-margin-bottom:2rem;
-}
-
-.hero-buttons{
-display:flex;
-gap:1rem;
-flex-wrap:wrap;
-margin-bottom:2rem;
-}
-
-.primary-btn{
-padding:1rem 1.5rem;
-border-radius:16px;
-background:linear-gradient(135deg,var(--purple),var(--purple2));
-font-weight:600;
-box-shadow:0 0 30px rgba(155,92,255,.35);
-}
-
-.secondary-btn{
-padding:1rem 1.5rem;
-border-radius:16px;
-background:var(--surface);
-border:1px solid var(--border);
-color:var(--muted);
-}
-
-.socials{
-display:flex;
-gap:1rem;
-flex-wrap:wrap;
-}
-
-.socials a{
-padding:.9rem 1rem;
-border-radius:14px;
-background:var(--surface);
-border:1px solid var(--border);
-font-size:.9rem;
-color:var(--muted);
-}
-
-/* SKILLS */
-
-#skills{
-padding:20px 6% 100px;
-text-align:center;
-}
-
-.sec-title{
-font-size:clamp(2rem,5vw,3rem);
-margin-bottom:3rem;
-letter-spacing:-.05em;
-}
-
-.skills-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:1.2rem;
-max-width:1100px;
-margin:auto;
-}
-
-.skill-card{
-padding:1.5rem 1rem;
-border-radius:22px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.07);
-backdrop-filter:blur(10px);
-transition:.3s;
-}
-
-.skill-card:hover{
-transform:translateY(-6px);
-box-shadow:0 0 30px rgba(155,92,255,.18);
-}
-
-.skill-card img{
-width:52px;
-height:52px;
-margin:auto;
-margin-bottom:1rem;
-}
-
-.skill-card p{
-font-size:.92rem;
-font-weight:600;
-}
-
-/* ABOUT */
-
-#about{
-padding:80px 6%;
-}
-
-.about-box{
-max-width:1000px;
-margin:auto;
-padding:3rem;
-border-radius:32px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(12px);
-}
-
-.about-box p{
-color:var(--muted);
-line-height:2;
-font-size:1rem;
-}
-
-/* CONTACT */
-
-#contact{
-padding:100px 6%;
-}
-
-.contact-wrap{
-max-width:1000px;
-margin:auto;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:2rem;
-}
-
-.contact-card{
-padding:2rem;
-border-radius:28px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(12px);
-}
-
-.contact-card h3{
-font-size:2rem;
-margin-bottom:1rem;
-}
-
-.contact-card p{
-color:var(--muted);
-line-height:1.8;
-margin-bottom:2rem;
-}
-
-.copy-email{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:1rem 1.2rem;
-border-radius:16px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.07);
-font-size:.9rem;
-}
-
-.links{
-display:flex;
-flex-direction:column;
-gap:1rem;
-}
-
-.links a{
-padding:1rem 1.2rem;
-border-radius:16px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.07);
-color:var(--muted);
-}
-
-footer{
-padding:2rem 6%;
-border-top:1px solid rgba(255,255,255,.08);
-text-align:center;
-color:var(--muted);
-font-size:.9rem;
-}
-
-@media(max-width:1000px){
-#home{
-grid-template-columns:1fr;
-text-align:center;
-gap:4rem;
-}
-
-.hero-left{
-order:1;
-}
-
-.hero-right{
-order:2;
-}
-
-.desc{
-margin:auto;
-margin-bottom:2rem;
-}
-
-.hero-buttons,
-.socials{
-justify-content:center;
-}
-
-.contact-wrap{
-grid-template-columns:1fr;
-}
-}
-
-@media(max-width:768px){
-.nav-links{
-display:none;
-}
-
-.hero-card,
-.card-back{
-width:280px;
-height:370px;
-}
-
-.typing{
-font-size:1.3rem;
-}
-
-.hero-buttons a,
-.socials a{
-width:100%;
-}
-
-.about-box,
-.contact-card{
-padding:2rem;
-}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atharv Tiwari | Web Developer</title>
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      background: #ffffff;
+      color: #1d1d1f;
+      line-height: 1.6;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 48px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1d1d1f;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #6e6e73;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #0071e3;
+    }
+
+    /* SECTIONS */
+    section {
+      min-height: 100vh;
+      padding: 120px 48px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6e6e73;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    /* HOME */
+    #home {
+      text-align: center;
+      align-items: center;
+    }
+
+    .welcome {
+      font-size: 18px;
+      color: #6e6e73;
+      margin-bottom: 16px;
+    }
+
+    .name {
+      font-size: 56px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 24px;
+      color: #6e6e73;
+      margin-bottom: 32px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .btn-primary {
+      background: #0071e3;
+      color: #ffffff;
+      padding: 14px 28px;
+      border-radius: 980px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #0077ed;
+    }
+
+    .btn-secondary {
+      background: #f5f5f7;
+      color: #1d1d1f;
+      padding: 14px 28px;
+      border-radius: 980px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: #e8e8ed;
+    }
+
+    /* MUSIC PLAYER */
+    .music-player {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f5f5f7;
+      padding: 12px 20px;
+      border-radius: 980px;
+      margin-top: 24px;
+    }
+
+    .play-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #0071e3;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .play-btn:hover {
+      background: #0077ed;
+    }
+
+    .play-btn svg {
+      fill: #ffffff;
+      width: 14px;
+      height: 14px;
+    }
+
+    .music-info {
+      text-align: left;
+    }
+
+    .music-label {
+      font-size: 11px;
+      color: #6e6e73;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .music-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1d1d1f;
+    }
+
+    .sound-waves {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 20px;
+    }
+
+    .sound-waves .bar {
+      width: 3px;
+      background: #0071e3;
+      border-radius: 2px;
+      animation: none;
+    }
+
+    .sound-waves.playing .bar {
+      animation: wave 0.5s ease-in-out infinite;
+    }
+
+    .sound-waves .bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+    .sound-waves .bar:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+    .sound-waves .bar:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+    .sound-waves .bar:nth-child(4) { height: 18px; animation-delay: 0.3s; }
+    .sound-waves .bar:nth-child(5) { height: 10px; animation-delay: 0.4s; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.5); }
+    }
+
+    /* ABOUT */
+    #about {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .about-text {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #1d1d1f;
+      margin-bottom: 40px;
+    }
+
+    .about-text p {
+      margin-bottom: 24px;
+    }
+
+    /* SKILL TICKER */
+    .ticker-container {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .ticker {
+      display: flex;
+      gap: 12px;
+      animation: ticker 15s linear infinite;
+    }
+
+    .ticker-item {
+      flex-shrink: 0;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      padding: 8px 20px;
+      border-radius: 980px;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* PROJECTS */
+    #projects {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .projects-subtitle {
+      font-size: 18px;
+      color: #6e6e73;
+      margin-bottom: 40px;
+    }
+
+    .project-card {
+      background: #f5f5f7;
+      border-radius: 18px;
+      padding: 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .project-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .project-desc {
+      font-size: 16px;
+      color: #6e6e73;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .project-tag {
+      background: #ffffff;
+      color: #1d1d1f;
+      padding: 6px 14px;
+      border-radius: 980px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .project-link {
+      display: inline-block;
+      background: #0071e3;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 980px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .project-link:hover {
+      background: #0077ed;
+    }
+
+    /* CONTACT */
+    #contact {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-size: 40px;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1d1d1f;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 14px 18px;
+      border: 1px solid #e8e8ed;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      background: #f5f5f7;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #0071e3;
+      background: #ffffff;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-error {
+      color: #ff3b30;
+      font-size: 14px;
+      display: none;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    .form-success {
+      color: #34c759;
+      font-size: 14px;
+      display: none;
+    }
+
+    .form-success.show {
+      display: block;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: #f5f5f7;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #1d1d1f;
+      transition: transform 0.3s ease, background 0.3s ease;
+      overflow: hidden;
+    }
+
+    .contact-card:hover {
+      transform: translateX(8px);
+      background: #e8e8ed;
+    }
+
+    .contact-card-icon {
+      font-size: 24px;
+    }
+
+    .contact-card-text {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: #6e6e73;
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        gap: 20px;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      section {
+        padding: 100px 24px 60px;
+      }
+
+      .name {
+        font-size: 40px;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+
+      .buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .about-text {
+        font-size: 16px;
+      }
+
+      .contact-heading {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 20px;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#home" class="logo">Atharv.</a>
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<nav>
-<div class="logo">AT</div>
+  <!-- HOME -->
+  <section id="home" class="visible">
+    <p class="welcome">Welcome</p>
+    <h1 class="name">I'm Atharv</h1>
+    <p class="title">Web Developer</p>
+    <div class="buttons">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="music-player">
+      <button class="play-btn" id="playBtn" aria-label="Play/Pause">
+        <svg id="playIcon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <div class="music-info">
+        <p class="music-label">Now Playing</p>
+        <p class="music-name">music.mp3</p>
+      </div>
+      <div class="sound-waves" id="soundWaves">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+    <audio id="audioPlayer" src="music.mp3"></audio>
+  </section>
 
-<div class="nav-links">
-<a href="#home">Home</a>
-<a href="#skills">Skills</a>
-<a href="#contact">Contact</a>
-<a href="#projects">Projects</a>
-</div>
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-title">About Me</p>
+    <div class="about-text">
+      <p>Hey, I'm Atharv Tiwari — a beginner web developer who believes the best websites feel invisible. No clutter, no noise. Just clarity.</p>
+      <p>I started from absolute zero. No bootcamp, no shortcuts — just curiosity, a browser, and a lot of googling. Every line of code I write teaches me something new.</p>
+      <p>My design north star? Apple. Simple surfaces. Intentional spacing. Details that quietly do the work.</p>
+      <p>I'm not just building websites — I'm building the habit of building.</p>
+    </div>
+    <div class="ticker-container">
+      <div class="ticker">
+        <span class="ticker-item">HTML</span>
+        <span class="ticker-item">CSS</span>
+        <span class="ticker-item">JavaScript</span>
+        <span class="ticker-item">GitHub</span>
+        <span class="ticker-item">HTML</span>
+        <span class="ticker-item">CSS</span>
+        <span class="ticker-item">JavaScript</span>
+        <span class="ticker-item">GitHub</span>
+        <span class="ticker-item">HTML</span>
+        <span class="ticker-item">CSS</span>
+        <span class="ticker-item">JavaScript</span>
+        <span class="ticker-item">GitHub</span>
+      </div>
+    </div>
+  </section>
 
-<div style="display:flex;gap:.8rem;align-items:center;">
-<button class="music-btn" id="themeBtn">Light Mode</button>
-<button class="music-btn" id="musicBtn">Play Music</button>
-</div>
-</nav>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-title">Projects</p>
+    <p class="projects-subtitle">Things I've built.</p>
+    <div class="project-card">
+      <div class="project-icon">🌐</div>
+      <h3 class="project-title">Personal Portfolio</h3>
+      <p class="project-desc">My first project — a personal corner of the internet, built from scratch with HTML, CSS & JS, hosted on GitHub Pages.</p>
+      <div class="project-tags">
+        <span class="project-tag">HTML</span>
+        <span class="project-tag">CSS</span>
+        <span class="project-tag">JS</span>
+        <span class="project-tag">GitHub Pages</span>
+      </div>
+      <!--https://atharvtiwari0.github.io/smaple/-->
+      <a href="https://atharvtiwari0.github.io" class="project-link" target="_blank" rel="noopener">Visit</a>
+    </div>
+  </section>
 
-<audio id="bgAudio" loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-title">Contact</p>
+    <h2 class="contact-heading">Let's connect.</h2>
+    <form class="contact-form" id="contactForm" action="https://submit-form.com/Pn8aUQHVe" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Your message..." required></textarea>
+      </div>
+      <p class="form-error" id="formError">Please fill in all fields.</p>
+      <p class="form-success" id="formSuccess">Message sent successfully!</p>
+      <button type="submit" class="btn-primary" id="submitBtn">Send Message →</button>
+    </form>
+    <div class="contact-links">
+      <a href="https://github.com/Atharvtiwari0" target="_blank" rel="noopener" class="contact-card">
+        <span class="contact-card-icon">📦</span>
+        <span class="contact-card-text">GitHub</span>
+      </a>
+      <a href="mailto:atharvtiwari@gmail.com" class="contact-card">
+        <span class="contact-card-icon">✉️</span>
+        <span class="contact-card-text">atharvtiwari@gmail.com</span>
+      </a>
+    </div>
+  </section>
 
-<section id="home">
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Atharv 
+  </footer>
 
-<div class="hero-left">
-<div class="glow"></div>
-<div class="card-back"></div>
+  <script>
+    /* MUSIC PLAYER */
+    const audio = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const soundWaves = document.getElementById('soundWaves');
+    let isPlaying = false;
 
-<div class="hero-card">
-<img src="hero1.jpg" id="slideImage">
+    playBtn.addEventListener('click', function() {
+      if (isPlaying) {
+        audio.pause();
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        soundWaves.classList.remove('playing');
+      } else {
+        audio.play();
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        soundWaves.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    });
 
-<div class="programmer-tag">
-&lt;Programmer/&gt;
-</div>
+    audio.addEventListener('ended', function() {
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+      soundWaves.classList.remove('playing');
+      isPlaying = false;
+    });
 
-<div class="available">
-<div class="dot"></div>
-Available for work
-</div>
-</div>
-</div>
+    /* SCROLL-BASED NAV HIGHLIGHT */
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-links a');
 
-<div class="hero-right">
-<small>Hey, I am</small>
+    function updateActiveNav() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
 
-<h1>
-Atharv <span>Tiwari.</span>
-</h1>
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    }
 
-<div class="typing" id="typingText">
-Web Developer
-</div>
+    /* FADE-UP ON SCROLL */
+    function revealSections() {
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (sectionTop < windowHeight - 100) {
+          section.classList.add('visible');
+        }
+      });
+    }
 
-<p class="desc">
-Turning ideas into working products — one line of code at a time.
-</p>
+    window.addEventListener('scroll', function() {
+      updateActiveNav();
+      revealSections();
+    });
 
-<div class="hero-buttons">
-<a href="#skills" class="primary-btn">View My Work</a>
-<a href="#contact" class="secondary-btn">Get In Touch</a>
-</div>
+    /* CONTACT FORM - FORMSPARK INTEGRATION */
+    const contactForm = document.getElementById('contactForm');
+    const formError = document.getElementById('formError');
+    const formSuccess = document.getElementById('formSuccess');
+    const submitBtn = document.getElementById('submitBtn');
 
-<div class="socials">
-<a href="https://github.com/AtharvTiwari0" target="_blank">GitHub</a>
-<a href="mailto:atharv.tiwari.012@gmail.com">Email</a>
-</div>
-</div>
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
 
-</section>
+      formError.classList.remove('show');
+      formSuccess.classList.remove('show');
 
-<section id="projects">
-<div class="about-box" style="max-width:1100px;margin:auto;margin-bottom:80px;text-align:center;">
-<h2 class="sec-title">Projects</h2>
-<p style="color:var(--muted);line-height:1.8;">
-Projects coming soon. Currently building new experiences.
-</p>
-</div>
-</section>
+      if (!name || !email || !message) {
+        formError.classList.add('show');
+        return;
+      }
 
-<section id="skills">
-<h2 class="sec-title">Skills & Technologies</h2>
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
 
-<div class="skills-grid">
+      try {
+        const response = await fetch('https://submit-form.com/Pn8aUQHVe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ name, email, message })
+        });
 
-<div class="skill-card">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg">
-<p>HTML</p>
-</div>
+        if (response.ok) {
+          formSuccess.classList.add('show');
+          contactForm.reset();
+        } else {
+          formError.textContent = 'Something went wrong. Please try again.';
+          formError.classList.add('show');
+        }
+      } catch (error) {
+        formError.textContent = 'Something went wrong. Please try again.';
+        formError.classList.add('show');
+      }
 
-<div class="skill-card">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg">
-<p>CSS</p>
-</div>
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message →';
+    });
 
-<div class="skill-card">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">
-<p>JavaScript</p>
-</div>
-
-
-
-<div class="skill-card">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg">
-<p>GitHub</p>
-</div>
-
-</div>
-</section>
-
-
-
-<section id="contact">
-<div class="contact-wrap">
-
-<div class="contact-card">
-<h3>Let's build something.</h3>
-
-<p>
-Got a project idea, want to collaborate, or just want to say hi?
-</p>
-
-<div class="copy-email" id="copyEmailBtn" style="margin-top:1rem;">
-<span>atharv.tiwari.012@gmail.com</span>
-<span id="copyText">Copy</span>
-</div>
-</div>
-
-<div class="contact-card">
-<div class="links">
-<a href="mailto:atharv.tiwari.012@gmail.com">Email</a>
-<a href="https://github.com/AtharvTiwari0" target="_blank">GitHub</a>
-</div>
-</div>
-
-</div>
-</section>
-
-<footer>
-© 2026 Atharv Tiwari
-</footer>
-
-<script>
-
-const images=['hero1.jpg','hero2.jpg','hero3.jpg'];
-let current=0;
-const slide=document.getElementById('slideImage');
-
-setInterval(()=>{
-current=(current+1)%images.length;
-slide.src=images[current];
-},4000);
-
-const typingWords=['Web Developer','Frontend Developer','UI Builder'];
-let word=0;
-
-setInterval(()=>{
-document.getElementById('typingText').textContent=typingWords[word];
-word=(word+1)%typingWords.length;
-},2000);
-
-const audio=document.getElementById('bgAudio');
-const musicBtn=document.getElementById('musicBtn');
-
-let playing=false;
-
-musicBtn.addEventListener('click',()=>{
-if(!playing){
-audio.volume=.25;
-audio.play();
-musicBtn.textContent='Hogwarts Tune ♪';
-playing=true;
-}else{
-audio.pause();
-musicBtn.textContent='Play Music';
-playing=false;
-}
-});
-
-const themeBtn=document.getElementById('themeBtn');
-
-let light=false;
-
-themeBtn.addEventListener('click',()=>{
-light=!light;
-
-document.body.classList.toggle('light');
-
-if(light){
- themeBtn.textContent='Dark Mode';
-}else{
- themeBtn.textContent='Light Mode';
-}
-});
-
-const copyBtn=document.getElementById('copyEmailBtn');
-
-copyBtn.addEventListener('click',async()=>{
-await navigator.clipboard.writeText('atharv.tiwari.012@gmail.com');
-document.getElementById('copyText').textContent='Copied';
-setTimeout(()=>{
-document.getElementById('copyText').textContent='Copy';
-},2000);
-});
-
-</script>
-
+    /* INITIAL REVEAL */
+    revealSections();
+  </script>
 </body>
 </html>
+
