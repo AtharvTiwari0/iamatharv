@@ -155,32 +155,32 @@ export default function App() {
 
   const projects = [
     {
-      title: 'Gourmet Haven',
+      title: 'Swarna_Mahal',
       desc: 'A premium restaurant webpage demo featuring fluid layouts, interactive menus, table booking systems, and smooth CSS entrance states.',
       tags: ['React', 'Vite', 'Tailwind CSS'],
       gitLink: 'https://github.com/AtharvTiwari0',
-      liveLink: '#',
+      liveLink: 'https://atharvtiwari0.github.io/swarna_mahal/ ',
     },
     {
-      title: 'WebGL Space Portfolio',
+      title: 'Sample portfolio',
       desc: 'An interactive portfolio rendering physical glass TorusKnot geometries and floating stardust arrays reacting directly to scroll coordinates.',
       tags: ['React', 'Three.js', 'React Three Fiber'],
       gitLink: 'https://github.com/AtharvTiwari0',
-      liveLink: '#',
+      liveLink: 'https://atharvtiwari0.github.io/smaple/',
     },
     {
-      title: 'Aura Retail E-Commerce',
+      title: 'Mantra',
       desc: 'A modern online storefront with complex state-driven shopping carts, animated product filters, and glassmorphic checkout dashboards.',
       tags: ['React', 'Express', 'Tailwind'],
       gitLink: 'https://github.com/AtharvTiwari0',
-      liveLink: '#',
+      liveLink: 'https://atharvtiwari0.github.io/mantra/ ',
     },
     {
-      title: 'Pulse Care Appointments',
+      title: 'Arogya-Dr.-appoitmnet',
       desc: 'A patient booking and schedule management console with scheduling algorithms, secure input checking, and fluid admin lists.',
       tags: ['React', 'Vite', 'Context API'],
       gitLink: 'https://github.com/AtharvTiwari0',
-      liveLink: '#',
+      liveLink: 'https://atharvtiwari0.github.io/arogya-sample/',
     },
   ];
 
