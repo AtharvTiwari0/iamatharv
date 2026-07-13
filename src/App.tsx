@@ -380,6 +380,7 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [contactType, setContactType] = useState('COLLAB');
+  const [formStatus, setFormStatus] = useState<'IDLE' | 'SENDING' | 'SUCCESS' | 'ERROR'>('IDLE');
 
   // ── Audio Playback State & Ref ──
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -487,6 +488,46 @@ export default function App() {
     await navigator.clipboard.writeText('atharb.builds@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('SENDING');
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const message = formData.get('message') as string;
+
+    const botToken = "8763819783:AAGb78aCqqflPmsnxqN1Kdm8j3QtGeLxOmA";
+    const chatId = "6801529368";
+
+    const textMessage = `🔔 *New Message from Portfolio*\n\n👤 *Name:* ${name}\n✉️ *Email:* ${email}\n🏷️ *Type:* ${contactType}\n💬 *Message:* ${message}\n\n━━━━━━━━━━━━━━━━━━\n✉️ [Reply to ${name} via Email](mailto:${email}?subject=Regarding%20your%20message%20on%20my%20portfolio)`;
+
+    try {
+      const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: textMessage,
+          parse_mode: 'Markdown',
+        }),
+      });
+
+      if (response.ok) {
+        setFormStatus('SUCCESS');
+        e.currentTarget.reset();
+        setTimeout(() => setFormStatus('IDLE'), 5000);
+      } else {
+        setFormStatus('ERROR');
+      }
+    } catch (error) {
+      console.error("Telegram send error:", error);
+      setFormStatus('ERROR');
+    }
   };
 
   // ── Data ──
@@ -1144,11 +1185,7 @@ export default function App() {
                   ))}
                 </div>
 
-                <form action={SUBMIT_URL} method="POST" className="space-y-5">
-                  <input type="hidden" name="_feedback.success.title" value="Message Sent!" />
-                  <input type="hidden" name="_feedback.success.message" value="Thanks! Atharv will get back to you shortly." />
-                  <input type="hidden" name="type" value={contactType} />
-
+                <form onSubmit={handleFormSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-mono tracking-widest text-ink-200 uppercase">Name</label>
@@ -1169,9 +1206,12 @@ export default function App() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3">
-                    <button type="submit"
-                      className="inline-flex items-center gap-3 px-6 py-3 bg-cream-100 hover:bg-peach-200 text-ink-900 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                      Send Message
+                    <button type="submit" disabled={formStatus === 'SENDING'}
+                      className={`inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-[1.02] cursor-pointer ${formStatus === 'SENDING' ? 'bg-ink-800 text-ink-300 border border-ink-200/12 opacity-60' : formStatus === 'SUCCESS' ? 'bg-peach-300/20 text-peach-300 border border-peach-300/45' : 'bg-cream-100 text-ink-900 hover:bg-peach-200'}`}>
+                      {formStatus === 'IDLE' && 'Send Message'}
+                      {formStatus === 'SENDING' && 'Sending...'}
+                      {formStatus === 'SUCCESS' && 'Message Sent! ✨'}
+                      {formStatus === 'ERROR' && 'Error! Try Again'}
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M3 8h10m0 0L8 3m5 5l-5 5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
