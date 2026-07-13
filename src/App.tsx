@@ -499,10 +499,21 @@ export default function App() {
     const email = formData.get('email') as string;
     const message = formData.get('message') as string;
 
+    const escapeHTML = (str: string) => {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    };
+
+    const escapedName = escapeHTML(name);
+    const escapedEmail = escapeHTML(email);
+    const escapedMessage = escapeHTML(message);
+
     const botToken = "8763819783:AAGb78aCqqflPmsnxqN1Kdm8j3QtGeLxOmA";
     const chatId = "6801529368";
 
-    const textMessage = `🔔 *New Message from Portfolio*\n\n👤 *Name:* ${name}\n✉️ *Email:* ${email}\n🏷️ *Type:* ${contactType}\n💬 *Message:* ${message}\n\n━━━━━━━━━━━━━━━━━━\n✉️ [Reply to ${name} via Email](mailto:${email}?subject=Regarding%20your%20message%20on%20my%20portfolio)`;
+    const htmlMessage = `🔔 <b>New Message from Portfolio</b>\n\n👤 <b>Name:</b> ${escapedName}\n✉️ <b>Email:</b> ${escapedEmail}\n🏷️ <b>Type:</b> ${contactType}\n💬 <b>Message:</b> ${escapedMessage}\n\n━━━━━━━━━━━━━━━━━━\n✉️ <a href="mailto:${escapedEmail}?subject=Regarding%20your%20message%20on%20my%20portfolio">Reply to ${escapedName} via Email</a>`;
 
     try {
       const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -512,8 +523,8 @@ export default function App() {
         },
         body: JSON.stringify({
           chat_id: chatId,
-          text: textMessage,
-          parse_mode: 'Markdown',
+          text: htmlMessage,
+          parse_mode: 'HTML',
         }),
       });
 
