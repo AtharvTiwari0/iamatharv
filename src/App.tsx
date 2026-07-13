@@ -18,19 +18,7 @@ const CURRENT_SONG = {
   isPlaying: true // set to false to stop the animation
 };
 
-// ─── Loopable Success Messages ───
-const THANK_YOU_MESSAGES = [
-  "Thank you! I'll get back to you shortly.",
-  "Awesome! Message received. Chat soon!",
-  "Got it! Thanks for reaching out.",
-  "Thanks! Let's build something great.",
-  "Nice! Message delivered to my Telegram.",
-  "Appreciate it! I'll read this right away.",
-  "Thanks! Your note has been delivered.",
-  "Perfect! Talk to you soon.",
-  "Thanks! Catch you on the other side.",
-  "Cheers! Message received successfully."
-];
+
 
 // ─── Icon Components ─────────────────────────────────────────────────────────
 
@@ -394,8 +382,7 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [contactType, setContactType] = useState('COLLAB');
-  const [formStatus, setFormStatus] = useState<'IDLE' | 'SENDING' | 'SUCCESS' | 'ERROR'>('IDLE');
-  const [successMessageIndex, setSuccessMessageIndex] = useState(0);
+
 
   // ── Audio Playback State & Ref ──
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -505,54 +492,7 @@ export default function App() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormStatus('SENDING');
 
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const message = formData.get('message') as string;
-
-    const escapeHTML = (str: string) => {
-      return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    };
-
-    const escapedName = escapeHTML(name);
-    const escapedEmail = escapeHTML(email);
-    const escapedMessage = escapeHTML(message);
-
-    const botToken = "8763819783:AAGb78aCqqflPmsnxqN1Kdm8j3QtGeLxOmA";
-    const chatId = "6891529368";
-
-    const htmlMessage = `🔔 <b>New Message from Portfolio</b>\n\n👤 <b>Name:</b> ${escapedName}\n✉️ <b>Email:</b> ${escapedEmail}\n🏷️ <b>Type:</b> ${contactType}\n💬 <b>Message:</b> ${escapedMessage}\n\n━━━━━━━━━━━━━━━━━━\n✉️ <a href="mailto:${escapedEmail}?subject=Regarding%20your%20message%20on%20my%20portfolio">Reply to ${escapedName} via Email</a>`;
-
-    const query = new URLSearchParams({
-      chat_id: chatId,
-      text: htmlMessage,
-      parse_mode: 'HTML'
-    }).toString();
-
-    try {
-      const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?${query}`, {
-        method: 'GET'
-      });
-
-      if (response.ok) {
-        setFormStatus('SUCCESS');
-        e.currentTarget.reset();
-        setSuccessMessageIndex((prev) => (prev + 1) % THANK_YOU_MESSAGES.length);
-      } else {
-        setFormStatus('ERROR');
-      }
-    } catch (error) {
-      console.error("Telegram send error:", error);
-      setFormStatus('ERROR');
-    }
-  };
 
   // ── Data ──
   const webProjects = [
@@ -1209,66 +1149,45 @@ export default function App() {
                   ))}
                 </div>
 
-                {formStatus === 'SUCCESS' ? (
-                  <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-6 animate-fade-in">
-                    <div className="w-16 h-16 bg-peach-300/20 text-peach-300 border border-peach-300/40 rounded-full flex items-center justify-center shadow-lg">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <polyline points="20 6 9 17 4 12" />
+                <form action={SUBMIT_URL} method="POST" className="space-y-5">
+                  <input type="hidden" name="_feedback.success.title" value="Message Sent!" />
+                  <input type="hidden" name="_feedback.success.message" value="Thanks! Atharv will get back to you shortly." />
+                  <input type="hidden" name="type" value={contactType} />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-mono tracking-widest text-ink-200 uppercase">Name</label>
+                      <input type="text" name="name" required placeholder="Your name"
+                        className="w-full bg-ink-900/20 border border-ink-200/16 rounded-xl px-4 py-3 text-cream-100 placeholder-ink-200/40 focus:outline-none focus:border-peach-300/45 transition-all font-sans text-sm" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-mono tracking-widest text-ink-200 uppercase">Email</label>
+                      <input type="email" name="email" required placeholder="your@email.com"
+                        className="w-full bg-ink-900/20 border border-ink-200/16 rounded-xl px-4 py-3 text-cream-100 placeholder-ink-200/40 focus:outline-none focus:border-peach-300/45 transition-all font-sans text-sm" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-mono tracking-widest text-ink-200 uppercase">Note</label>
+                    <textarea name="message" required rows={5} placeholder="Tell me about your project, app idea, or collaboration..."
+                      className="w-full bg-ink-900/20 border border-ink-200/16 rounded-xl px-4 py-3 text-cream-100 placeholder-ink-200/40 focus:outline-none focus:border-peach-300/45 transition-all resize-none font-sans text-sm" />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    <button type="submit"
+                      className="inline-flex items-center gap-3 px-6 py-3 bg-cream-100 hover:bg-peach-200 text-ink-900 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+                      Send Message
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M3 8h10m0 0L8 3m5 5l-5 5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="font-display text-2xl font-bold text-cream-100">Message Sent!</h3>
-                      <p className="text-ink-200 text-sm max-w-[340px] leading-relaxed">
-                        {THANK_YOU_MESSAGES[successMessageIndex]}
-                      </p>
-                    </div>
-                    <button 
-                      type="button" 
-                      onClick={() => setFormStatus('IDLE')}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink-800 border border-ink-200/12 hover:border-peach-300/45 text-cream-100 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
-                    >
-                      Send Another Note
+                    </button>
+                    <button type="button" onClick={copyEmail}
+                      className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-ink-200/20 text-ink-200 hover:text-cream-100 hover:border-ink-200/40 font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-200">
+                      <CopyIcon />
+                      {copied ? 'Copied!' : 'Copy Email'}
                     </button>
                   </div>
-                ) : (
-                  <form onSubmit={handleFormSubmit} className="space-y-5">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-mono tracking-widest text-ink-200 uppercase">Name</label>
-                        <input type="text" name="name" required placeholder="Your name"
-                          className="w-full bg-ink-900/20 border border-ink-200/16 rounded-xl px-4 py-3 text-cream-100 placeholder-ink-200/40 focus:outline-none focus:border-peach-300/45 transition-all font-sans text-sm" />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-mono tracking-widest text-ink-200 uppercase">Email</label>
-                        <input type="email" name="email" required placeholder="your@email.com"
-                          className="w-full bg-ink-900/20 border border-ink-200/16 rounded-xl px-4 py-3 text-cream-100 placeholder-ink-200/40 focus:outline-none focus:border-peach-300/45 transition-all font-sans text-sm" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-mono tracking-widest text-ink-200 uppercase">Note</label>
-                      <textarea name="message" required rows={5} placeholder="Tell me about your project, app idea, or collaboration..."
-                        className="w-full bg-ink-900/20 border border-ink-200/16 rounded-xl px-4 py-3 text-cream-100 placeholder-ink-200/40 focus:outline-none focus:border-peach-300/45 transition-all resize-none font-sans text-sm" />
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-3">
-                      <button type="submit" disabled={formStatus === 'SENDING'}
-                        className={`inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-[1.02] cursor-pointer ${formStatus === 'SENDING' ? 'bg-ink-800 text-ink-300 border border-ink-200/12 opacity-60' : 'bg-cream-100 text-ink-900 hover:bg-peach-200'}`}>
-                        {formStatus === 'IDLE' && 'Send Message'}
-                        {formStatus === 'SENDING' && 'Sending...'}
-                        {formStatus === 'ERROR' && 'Error! Try Again'}
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M3 8h10m0 0L8 3m5 5l-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </button>
-                      <button type="button" onClick={copyEmail}
-                        className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-ink-200/20 text-ink-200 hover:text-cream-100 hover:border-ink-200/40 font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-200">
-                        <CopyIcon />
-                        {copied ? 'Copied!' : 'Copy Email'}
-                      </button>
-                    </div>
-                  </form>
-                )}
+                </form>
               </div>
 
               {/* Right: Correspondence */}
