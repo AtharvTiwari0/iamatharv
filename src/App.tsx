@@ -511,7 +511,7 @@ export default function App() {
     const escapedMessage = escapeHTML(message);
 
     const botToken = "8763819783:AAGb78aCqqflPmsnxqN1Kdm8j3QtGeLxOmA";
-    const chatId = "6801529368";
+    const chatId = "6891529368";
 
     const htmlMessage = `🔔 <b>New Message from Portfolio</b>\n\n👤 <b>Name:</b> ${escapedName}\n✉️ <b>Email:</b> ${escapedEmail}\n🏷️ <b>Type:</b> ${contactType}\n💬 <b>Message:</b> ${escapedMessage}\n\n━━━━━━━━━━━━━━━━━━\n✉️ <a href="mailto:${escapedEmail}?subject=Regarding%20your%20message%20on%20my%20portfolio">Reply to ${escapedName} via Email</a>`;
 
