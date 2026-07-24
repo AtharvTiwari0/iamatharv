@@ -4,6 +4,7 @@ import portraitPic from './assets/potrit.png';
 import mandiLogo from './assets/mandi-logo.png';
 import qLogo from './assets/q-logo.png';
 import kharchLogo from './assets/kharch-logo.png';
+import apexDominionLogo from './assets/apex-dominion-logo.png';
 import majboorAudio from './assets/majboor.mp3';
 
 const FORM_SUBMIT_HOST = "submit-form.com";
@@ -506,9 +507,10 @@ export default function App() {
   ];
 
   const products = [
-    { index: 'I', code: 'B.01', title: 'Mandi Connect', subtitle: 'Agriculture · Market Access', desc: 'Direct market access for farmers. Connects local agricultural producers with real-time mandi prices and direct buyer networks. Built to solve a real communication gap in rural India.', tags: ['React Native', 'Expo', 'Supabase', 'Agriculture'], gitLink: 'https://github.com/AtharvTiwari0', liveLink: 'https://atharb-builds.pages.dev/mandi-connect.html', accentColor: '#1e88e5', logo: mandiLogo },
-    { index: 'II', code: 'B.02', title: 'Q App', subtitle: 'Social · Secure Messenger', desc: "India's premium messaging experience. A high-fidelity communication app featuring secure real-time messaging, group channels, and custom UI. Currently being refined and launched.", tags: ['React Native', 'Expo Router', 'Supabase', 'Real-time'], gitLink: 'https://github.com/AtharvTiwari0', liveLink: 'https://atharb-builds.pages.dev/q.html', accentColor: '#8e24aa', logo: qLogo },
-    { index: 'III', code: 'B.03', title: 'Kharch', subtitle: 'Finance · Expense Tracker', desc: 'Personal expense tracker with sleek analytics dashboard tracking monthly budgets, categories, and direct data persistence. Clean, fast, and focused.', tags: ['React Native', 'Expo', 'Zustand', 'Finance'], gitLink: 'https://github.com/AtharvTiwari0', liveLink: 'https://atharb-builds.pages.dev/kharch.html', accentColor: '#43a047', logo: kharchLogo },
+    { index: 'I', code: 'B.01', title: 'Apex Dominion', subtitle: 'Esports · Tournaments', desc: "India's premier mobile esports tournament platform. Allows users to register for daily BGMI, Free Fire, and COD Mobile matches, pay securely via integrated UPI deep links, and track character results. Features auto UTR validation and custom admin panel controls.", tags: ['React Native', 'Expo', 'Supabase', 'Real-time'], gitLink: 'https://github.com/AtharvTiwari0', liveLink: 'https://atharb-builds.pages.dev/apex-dominion.html', accentColor: '#6366f1', logo: apexDominionLogo },
+    { index: 'II', code: 'B.02', title: 'Mandi Connect', subtitle: 'Agriculture · Market Access', desc: 'Direct market access for farmers. Connects local agricultural producers with real-time mandi prices and direct buyer networks. Built to solve a real communication gap in rural India.', tags: ['React Native', 'Expo', 'Supabase', 'Agriculture'], gitLink: 'https://github.com/AtharvTiwari0', liveLink: 'https://atharb-builds.pages.dev/mandi-connect.html', accentColor: '#1e88e5', logo: mandiLogo },
+    { index: 'III', code: 'B.03', title: 'Q App', subtitle: 'Social · Secure Messenger', desc: "India's premium messaging experience. A high-fidelity communication app featuring secure real-time messaging, group channels, and custom UI. Currently being refined and launched.", tags: ['React Native', 'Expo Router', 'Supabase', 'Real-time'], gitLink: 'https://github.com/AtharvTiwari0', liveLink: 'https://atharb-builds.pages.dev/q.html', accentColor: '#8e24aa', logo: qLogo },
+    { index: 'IV', code: 'B.04', title: 'Kharch', subtitle: 'Finance · Expense Tracker', desc: 'Personal expense tracker with sleek analytics dashboard tracking monthly budgets, categories, and direct data persistence. Clean, fast, and focused.', tags: ['React Native', 'Expo', 'Zustand', 'Finance'], gitLink: 'https://github.com/AtharvTiwari0', liveLink: 'https://atharb-builds.pages.dev/kharch.html', accentColor: '#43a047', logo: kharchLogo },
   ];
 
   const toolkit = {
